@@ -1,4 +1,12 @@
-# AMQP JCA resource adapter
+# AMQP 1.0 resource adapter
+
+A JCA resource adapter for using AMQP 1.0 messaging with app servers
+such as WildFly or Thorntail.
+
+This component combines the
+[Generic JMS JCA resource adapter](https://github.com/jms-ra/generic-jms-ra)
+with the
+[Apache Qpid JMS client](https://github.com/jms-ra/generic-jms-ra).
 
 ## Maven coordinates
 
