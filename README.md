@@ -6,7 +6,7 @@ such as WildFly or Thorntail.
 This component combines the
 [Generic JMS JCA resource adapter](https://github.com/jms-ra/generic-jms-ra)
 with the
-[Apache Qpid JMS client](https://github.com/jms-ra/generic-jms-ra).
+[Apache Qpid JMS client](https://qpid.apache.org/components/jms/index.html).
 
 ## Maven coordinates
 
