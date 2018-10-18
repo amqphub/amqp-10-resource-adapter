@@ -11,5 +11,6 @@
 
   <modules>
     <module>resource-adapter</module>
+    <module>resource-adapter-thorntail-example</module>
   </modules>
 </project>
