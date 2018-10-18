@@ -12,7 +12,7 @@ with the
 
     <dependency>
       <groupId>org.amqphub.jca</groupId>
-      <artifactId>amqp-resource-adapter</artifactId>
+      <artifactId>resource-adapter</artifactId>
       <version>${current-version}</version>
       <type>rar</type>
     </dependency>
@@ -21,11 +21,11 @@ with the
 
     swarm:
       deployment:
-        org.amqphub.jca:amqp-resource-adapter.rar:
+        org.amqphub.jca:resource-adapter.rar:
       resource-adapters:
         resource-adapters:
           default:
-            archive: amqp-resource-adapter.rar
+            archive: resource-adapter.rar
             transaction-support: NoTransaction
             connection-definitions:
               default:
