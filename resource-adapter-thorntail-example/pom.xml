@@ -10,7 +10,7 @@
 
   <artifactId>resource-adapter-thorntail-example</artifactId>
   <version>1.0.0-SNAPSHOT</version>
-  <packaging>jar</packaging>
+  <packaging>war</packaging>
 
   <name>AMQP 1.0 resource adapter - Thorntail example</name>
 
@@ -20,6 +20,7 @@
     <version.javax.json>1.0.4</version.javax.json>
     <version.junit>4.12</version.junit>
     <version.thorntail>2.2.0.Final</version.thorntail>
+    <failOnMissingWebXml>false</failOnMissingWebXml>
   </properties>
 
   <dependencyManagement>
@@ -50,10 +51,6 @@
     <dependency>
       <groupId>io.thorntail</groupId>
       <artifactId>ejb</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>io.thorntail</groupId>
-      <artifactId>microprofile-health</artifactId>
     </dependency>
     <!-- I don't think I should need this, but I do -->
     <dependency>
