@@ -45,15 +45,17 @@ with the
       ee:
         annotation-property-replacement: true
 
-## Example annotations
+## Example MDB configuration
 
     @MessageDriven(activationConfig = {
             @ActivationConfigProperty(propertyName = "connectionFactory", propertyValue = "factory1"),
             @ActivationConfigProperty(propertyName = "user", propertyValue = "example"),
             @ActivationConfigProperty(propertyName = "password", propertyValue = "example"),
             @ActivationConfigProperty(propertyName = "destination", propertyValue = "queue1"),
+            @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue"),
             @ActivationConfigProperty(propertyName = "jndiParameters", propertyValue = "java.naming.factory.initial=org.apache.qpid.jms.jndi.JmsInitialContextFactory;connectionFactory.factory1=amqp://${env.MESSAGING_SERVICE_HOST:localhost}:${env.MESSAGING_SERVICE_PORT:5672};queue.queue1=example"),
         })
+    @ResourceAdapter("resource-adapter.rar")
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public class ExampleListener implements MessageListener {
         @Inject
