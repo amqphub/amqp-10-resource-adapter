@@ -1,6 +1,9 @@
 # AMQP 1.0 resource adapter - Thorntail example
 
-1. Start an AMQP 1.0 broker on localhost and port 5672.
+1. Start an AMQP 1.0 server on localhost and port 5672.  If your
+   server does not create queues on demand, use the tools for your
+   server to create queues called `example/requests` and
+   `example/responses`.
 
 2. Build and run the example code.
 
