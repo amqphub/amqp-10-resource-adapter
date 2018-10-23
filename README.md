@@ -17,7 +17,7 @@ with the
       <type>rar</type>
     </dependency>
 
-## Thorntail configuration
+## Example Thorntail configuration
 
     swarm:
       deployment:
@@ -52,10 +52,10 @@ with the
             @ActivationConfigProperty(propertyName = "user", propertyValue = "example"),
             @ActivationConfigProperty(propertyName = "password", propertyValue = "example"),
             @ActivationConfigProperty(propertyName = "destination", propertyValue = "queue1"),
-            @ActivationConfigProperty(propertyName = "jndiParameters", propertyValue = "java.naming.factory.initial=org.apache.qpid.jms.jndi.JmsInitialContextFactory;connectionFactory.factory1=amqp://${env.MESSAGING_SERVICE_HOST:localhost}:${env.MESSAGING_SERVICE_PORT:5672};queue.queue1=example/requests"),
+            @ActivationConfigProperty(propertyName = "jndiParameters", propertyValue = "java.naming.factory.initial=org.apache.qpid.jms.jndi.JmsInitialContextFactory;connectionFactory.factory1=amqp://${env.MESSAGING_SERVICE_HOST:localhost}:${env.MESSAGING_SERVICE_PORT:5672};queue.queue1=example"),
         })
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-    public class Example implements MessageListener {
+    public class ExampleListener implements MessageListener {
         @Inject
         @JMSConnectionFactory("java:global/jms/default")
         private JMSContext jmsContext;
