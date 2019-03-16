@@ -37,7 +37,7 @@
 
   <scm>
     <connection>scm:git:git://github.com/amqphub/amqp-10-resource-adapter.git</connection>
-    <developerConnection>scm:git:ssh://github.com:amqphub/amqp-10-resource-adapter.git</developerConnection>
+    <developerConnection>scm:git:ssh://github.com/amqphub/amqp-10-resource-adapter.git</developerConnection>
     <url>http://github.com/amqphub/amqp-10-resource-adapter/tree/master</url>
   </scm>
 
