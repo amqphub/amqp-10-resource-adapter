@@ -22,8 +22,8 @@
 
   <scm>
     <url>https://github.com/amqphub/amqp-10-resource-adapter.git</url>
-    <connection>scm:git:git://github.com/amqphub/amqp-10-resource-adapter.git</connection>
-    <developerConnection>scm:git:git://github.com/amqphub/amqp-10-resource-adapter.git</developerConnection>
+    <connection>scm:git:git@github.com:amqphub/amqp-10-resource-adapter.git</connection>
+    <developerConnection>scm:git:git@github.com:amqphub/amqp-10-resource-adapter.git</developerConnection>
     <tag>HEAD</tag>
   </scm>
 
