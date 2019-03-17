@@ -4,7 +4,7 @@
 
   <groupId>org.amqphub.jca</groupId>
   <artifactId>resource-adapter-parent</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>AMQP 1.0 resource adapter - parent</name>
@@ -24,7 +24,7 @@
     <url>https://github.com/amqphub/amqp-10-resource-adapter.git</url>
     <connection>scm:git:git@github.com:amqphub/amqp-10-resource-adapter.git</connection>
     <developerConnection>scm:git:git@github.com:amqphub/amqp-10-resource-adapter.git</developerConnection>
-    <tag>1.0.0</tag>
+    <tag>HEAD</tag>
   </scm>
 
   <developers>
