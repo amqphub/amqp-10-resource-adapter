@@ -16,14 +16,14 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.jboss.genericjms</groupId>
-      <artifactId>generic-jms-ra-jar</artifactId>
-      <version>2.0.1.Final</version>
-    </dependency>
-    <dependency>
       <groupId>org.apache.qpid</groupId>
       <artifactId>qpid-jms-client</artifactId>
-      <version>0.40.0</version>
+      <version>${qpid-jms-version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.genericjms</groupId>
+      <artifactId>generic-jms-ra-jar</artifactId>
+      <version>${generic-jms-ra-version}</version>
     </dependency>
   </dependencies>
 
