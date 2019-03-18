@@ -12,6 +12,18 @@
   with app servers such as WildFly or Thorntail.</description>
   <url>https://github.com/amqphub/amqp-10-resource-adapter</url>
 
+  <!-- mvn -Prelease clean release:prepare -->
+  <!-- mvn -Prelease clean release:perform -->
+  <!-- -Dusername=ssorj -->
+  <!-- -DdryRun=true -->
+
+  <!-- https://issues.sonatype.org/browse/OSSRH-46564 -->
+  <!-- https://maven.apache.org/repository/guide-central-repository-upload.html -->
+  <!-- https://central.sonatype.org/pages/apache-maven.html -->
+  <!-- http://maven.apache.org/maven-release/maven-release-plugin/examples/prepare-release.html -->
+  <!-- http://maven.apache.org/maven-release/maven-release-plugin/usage.html -->
+  <!-- https://central.sonatype.org/pages/releasing-the-deployment.html -->
+
   <licenses>
     <license>
       <name>GNU Lesser General Public License, Version 2.1</name>
