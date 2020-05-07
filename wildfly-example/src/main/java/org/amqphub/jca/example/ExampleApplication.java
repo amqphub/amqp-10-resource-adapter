@@ -1,7 +1,7 @@
 package org.amqphub.jca.example;
 
-import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.inject.Singleton;
 import javax.jms.JMSConnectionFactory;
 import javax.jms.JMSException;
 import javax.jms.JMSConsumer;
@@ -22,7 +22,7 @@ import javax.ws.rs.core.Application;
 import javax.ws.rs.core.MediaType;
 import org.jboss.logging.Logger;
 
-@ApplicationScoped
+@Singleton
 @ApplicationPath("/api")
 @Path("/")
 public class ExampleApplication extends Application {
