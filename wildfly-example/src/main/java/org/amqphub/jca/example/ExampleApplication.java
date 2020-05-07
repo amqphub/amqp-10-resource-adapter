@@ -33,7 +33,7 @@ public class ExampleApplication extends Application {
     private JMSContext jmsContext;
 
     @POST
-    @Path("send-request")
+    @Path("/send-request")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_PLAIN)
     public String sendRequest(Request request) {
@@ -55,7 +55,7 @@ public class ExampleApplication extends Application {
     }
 
     @POST
-    @Path("receive-response")
+    @Path("/receive-response")
     @Produces(MediaType.TEXT_PLAIN)
     public String receiveResponse() {
         log.infof("Receiving response message");
