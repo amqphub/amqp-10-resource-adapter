@@ -53,7 +53,7 @@ with the
             @ActivationConfigProperty(propertyName = "password", propertyValue = "example"),
             @ActivationConfigProperty(propertyName = "destination", propertyValue = "queue1"),
             @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue"),
-            @ActivationConfigProperty(propertyName = "jndiParameters", propertyValue = "java.naming.factory.initial=org.apache.qpid.jms.jndi.JmsInitialContextFactory;connectionFactory.factory1=amqp://${env.MESSAGING_SERVICE_HOST:localhost}:${env.MESSAGING_SERVICE_PORT:5672};queue.queue1=example"),
+            @ActivationConfigProperty(propertyName = "jndiParameters", propertyValue = "java.naming.factory.initial=org.apache.qpid.jms.jndi.JmsInitialContextFactory;connectionFactory.factory1=amqp://${MESSAGING_SERVICE_HOST:-localhost}:${MESSAGING_SERVICE_PORT:-5672};queue.queue1=example"),
         })
     @ResourceAdapter("resource-adapter.rar")
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
@@ -66,3 +66,11 @@ with the
         public void onMessage(Message message) {
         }
     }
+
+## Running the WildFly example
+
+    $ mvn clean package
+    $ ./run-example.sh
+
+    $ curl -X POST -d '{"text": "hello"}' -H 'Content-Type: application/json' http://localhost:8080/resource-adapter-wildfly-example-1.0.1-SNAPSHOT/send-request && echo
+    $ curl -X POST http://localhost:8080/resource-adapter-wildfly-example-1.0.1-SNAPSHOT/receive-response && echo
