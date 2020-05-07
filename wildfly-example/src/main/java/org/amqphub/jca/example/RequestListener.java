@@ -25,7 +25,7 @@ import org.jboss.logging.Logger;
         // @ActivationConfigProperty(propertyName = "password", propertyValue = "example"),
         @ActivationConfigProperty(propertyName = "connectionFactory", propertyValue = "factory1"),
         @ActivationConfigProperty(propertyName = "destination", propertyValue = "queue1"),
-        @ActivationConfigProperty(propertyName = "jndiParameters", propertyValue = "java.naming.factory.initial=org.apache.qpid.jms.jndi.JmsInitialContextFactory;connectionFactory.factory1=amqp://${env.MESSAGING_SERVICE_HOST:localhost}:${env.MESSAGING_SERVICE_PORT:5672};queue.queue1=example/requests"),
+        @ActivationConfigProperty(propertyName = "jndiParameters", propertyValue = "java.naming.factory.initial=org.apache.qpid.jms.jndi.JmsInitialContextFactory;connectionFactory.factory1=amqp://${MESSAGING_SERVICE_HOST:-localhost}:${MESSAGING_SERVICE_PORT:-5672};queue.queue1=example/requests"),
     })
 @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 public class RequestListener implements MessageListener {
