@@ -13,7 +13,7 @@ with the
     <dependency>
       <groupId>org.amqphub.jca</groupId>
       <artifactId>resource-adapter</artifactId>
-      <version>1.0.0</version>
+      <version>${current-version}</version>
       <type>rar</type>
     </dependency>
 
