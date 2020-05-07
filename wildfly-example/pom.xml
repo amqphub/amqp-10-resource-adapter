@@ -17,6 +17,7 @@
   <properties>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
+    <failOnMissingWebXml>false</failOnMissingWebXml>
   </properties>
 
   <dependencyManagement>
@@ -51,6 +52,7 @@
     <dependency>
       <groupId>org.jboss.resteasy</groupId>
       <artifactId>resteasy-jaxrs</artifactId>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.amqphub.jca</groupId>
