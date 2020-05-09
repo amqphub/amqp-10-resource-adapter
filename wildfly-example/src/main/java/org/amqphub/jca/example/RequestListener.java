@@ -1,6 +1,5 @@
 package org.amqphub.jca.example;
 
-import java.util.concurrent.atomic.AtomicInteger;
 import javax.ejb.ActivationConfigProperty;
 import javax.ejb.MessageDriven;
 import javax.ejb.TransactionAttribute;
@@ -12,12 +11,8 @@ import javax.jms.JMSException;
 import javax.jms.JMSProducer;
 import javax.jms.Message;
 import javax.jms.MessageListener;
-import javax.jms.MessageProducer;
 import javax.jms.Queue;
-import javax.jms.Session;
 import javax.jms.TextMessage;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import org.jboss.logging.Logger;
 
 @MessageDriven(activationConfig = {
