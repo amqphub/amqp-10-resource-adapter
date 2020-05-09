@@ -1,3 +1,5 @@
+# Used in scripts/run-artemis.sh, invoked from the project root
+
 FROM jboss/wildfly
 
 COPY resource-adapter/target/resource-adapter-*.rar /opt/jboss/wildfly/standalone/deployments/resource-adapter.rar
