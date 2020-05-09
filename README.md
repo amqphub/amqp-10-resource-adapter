@@ -72,5 +72,5 @@ with the
     $ mvn clean package
     $ ./run-example.sh
 
-    $ curl -X POST -d '{"text": "hello"}' -H 'Content-Type: application/json' http://localhost:8080/resource-adapter-wildfly-example-1.0.1-SNAPSHOT/send-request && echo
-    $ curl -X POST http://localhost:8080/resource-adapter-wildfly-example-1.0.1-SNAPSHOT/receive-response && echo
+    $ curl -X POST -d '{"text": "hello"}' -H 'Content-Type: application/json' http://localhost:8080/wildfly-example/api/send-request && echo
+    $ curl -X POST http://localhost:8080/wildfly-example/api/receive-response && echo
