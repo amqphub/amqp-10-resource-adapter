@@ -13,6 +13,8 @@ for i in {0..30}; do
     curl -sfo /dev/null http://localhost:9990/health && break
 done
 
+# XXX For some reason, the request queue is created as a topic if we
+# don't have this sleep
 sleep 5
 
 scripts/run-curl-commands.sh
