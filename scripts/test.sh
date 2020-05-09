@@ -13,4 +13,6 @@ for i in {0..30}; do
     curl -sfo /dev/null http://localhost:9990/health && break
 done
 
+sleep 5
+
 scripts/run-curl-commands.sh

@@ -6,10 +6,8 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
 import javax.jms.JMSException;
-import javax.jms.JMSProducer;
 import javax.jms.Message;
 import javax.jms.MessageListener;
-import javax.jms.Queue;
 import javax.jms.TextMessage;
 import org.jboss.logging.Logger;
 
@@ -18,6 +16,7 @@ import org.jboss.logging.Logger;
         @ActivationConfigProperty(propertyName = "password", propertyValue = "example"),
         @ActivationConfigProperty(propertyName = "connectionFactory", propertyValue = "factory1"),
         @ActivationConfigProperty(propertyName = "destination", propertyValue = "queue1"),
+        @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue"),
         @ActivationConfigProperty(propertyName = "jndiParameters", propertyValue = "java.naming.factory.initial=org.apache.qpid.jms.jndi.JmsInitialContextFactory;connectionFactory.factory1=amqp://localhost:5672;queue.queue1=example/responses"),
     })
 @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
