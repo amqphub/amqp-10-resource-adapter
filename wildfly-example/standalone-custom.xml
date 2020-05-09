@@ -441,8 +441,8 @@
           <connection-definitions>
             <connection-definition class-name="org.jboss.resource.adapter.jms.JmsManagedConnectionFactory"
                                    jndi-name="java:global/jms/default">
-              <!-- <config-property name="UserName">example</config-property> -->
-              <!-- <config-property name="Password">example</config-property> -->
+              <config-property name="UserName">example</config-property>
+              <config-property name="Password">example</config-property>
               <config-property name="ConnectionFactory">factory1</config-property>
               <config-property name="JndiParameters">java.naming.factory.initial=org.apache.qpid.jms.jndi.JmsInitialContextFactory;connectionFactory.factory1=amqp://localhost:5672</config-property>
             </connection-definition>
