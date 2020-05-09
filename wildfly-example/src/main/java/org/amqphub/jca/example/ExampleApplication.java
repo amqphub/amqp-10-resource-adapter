@@ -1,5 +1,7 @@
 package org.amqphub.jca.example;
 
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.jms.JMSConnectionFactory;
@@ -27,6 +29,8 @@ public class ExampleApplication extends Application {
     @Inject
     @JMSConnectionFactory("java:global/jms/default")
     private JMSContext jmsContext;
+
+    BlockingQueue<String> responses = new LinkedBlockingQueue<>();
 
     @POST
     @Path("/send-request")
@@ -56,19 +60,15 @@ public class ExampleApplication extends Application {
     public String receiveResponse() {
         log.infof("Receiving response message");
 
-        Queue responses = jmsContext.createQueue("example/responses");
-        JMSConsumer consumer = jmsContext.createConsumer(responses);
-
-        TextMessage message = (TextMessage) consumer.receiveNoWait();
-
-        if (message == null) {
-            return "[No responses]\n";
-        }
+        String response;
 
         try {
-            return message.getJMSCorrelationID() + ": " + message.getText() + "\n";
-        } catch (JMSException e) {
+            response = responses.take();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
             throw new RuntimeException(e);
         }
+
+        return response + "\n";
     }
 }
