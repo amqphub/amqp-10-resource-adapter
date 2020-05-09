@@ -34,9 +34,9 @@ public class ExampleApplication extends Application {
 
     @POST
     @Path("/send-request")
-    @Consumes(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.TEXT_PLAIN)
     @Produces(MediaType.TEXT_PLAIN)
-    public String sendRequest(Request request) {
+    public String sendRequest(String text) {
         log.infof("Sending request message");
 
         Queue requests = jmsContext.createQueue("example/requests");
@@ -44,7 +44,7 @@ public class ExampleApplication extends Application {
         TextMessage message = jmsContext.createTextMessage();
 
         try {
-            message.setText(request.getText());
+            message.setText(text);
 
             producer.send(requests, message);
 
