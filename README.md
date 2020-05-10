@@ -47,25 +47,46 @@ with the
 
 ## Example MDB configuration
 
-    @MessageDriven(activationConfig = {
-            @ActivationConfigProperty(propertyName = "connectionFactory", propertyValue = "factory1"),
-            @ActivationConfigProperty(propertyName = "user", propertyValue = "example"),
-            @ActivationConfigProperty(propertyName = "password", propertyValue = "example"),
-            @ActivationConfigProperty(propertyName = "destination", propertyValue = "queue1"),
-            @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue"),
-            @ActivationConfigProperty(propertyName = "jndiParameters", propertyValue = "java.naming.factory.initial=org.apache.qpid.jms.jndi.JmsInitialContextFactory;connectionFactory.factory1=amqp://${MESSAGING_SERVICE_HOST:-localhost}:${MESSAGING_SERVICE_PORT:-5672};queue.queue1=example"),
-        })
-    @ResourceAdapter("resource-adapter.rar")
-    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-    public class ExampleListener implements MessageListener {
-        @Inject
-        @JMSConnectionFactory("java:global/jms/default")
-        private JMSContext jmsContext;
-
-        @Override
-        public void onMessage(Message message) {
-        }
+```java
+@MessageDriven(activationConfig = {
+        @ActivationConfigProperty(propertyName = "connectionFactory", propertyValue = "factory1"),
+        @ActivationConfigProperty(propertyName = "user", propertyValue = "example"),
+        @ActivationConfigProperty(propertyName = "password", propertyValue = "example"),
+        @ActivationConfigProperty(propertyName = "destination", propertyValue = "queue1"),
+        @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue"),
+        @ActivationConfigProperty(propertyName = "jndiParameters", propertyValue = "java.naming.factory.initial=org.apache.qpid.jms.jndi.JmsInitialContextFactory;connectionFactory.factory1=amqp://localhost:5672;queue.queue1=example"),
+    })
+@ResourceAdapter("resource-adapter.rar")
+@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+public class ExampleListener implements MessageListener {
+    @Override
+    public void onMessage(Message message) {
+        System.out.println("Received message " + message);
     }
+}
+```
+
+## Example JMSContext injection
+
+```java
+@Singleton
+public class ExampleApplication {
+    @Inject
+    @JMSConnectionFactory("java:global/jms/default")
+    private JMSContext jmsContext;
+
+    public synchronized void sendMessage(String text) throws JMSException {
+        Queue queue = jmsContext.createQueue("example");
+        JMSProducer producer = jmsContext.createProducer();
+        TextMessage message = jmsContext.createTextMessage();
+
+        message.setText(text);
+        producer.send(queue, message);
+
+        System.out.println("Sent message " + message);
+    }
+}
+```
 
 ## Running the WildFly example
 

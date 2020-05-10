@@ -36,7 +36,7 @@ public class ExampleApplication extends Application {
     @Path("/send-request")
     @Consumes(MediaType.TEXT_PLAIN)
     @Produces(MediaType.TEXT_PLAIN)
-    public String sendRequest(String text) {
+    public synchronized String sendRequest(String text) {
         log.infof("Sending request message");
 
         Queue requests = jmsContext.createQueue("example/requests");
