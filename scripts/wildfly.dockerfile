@@ -1,4 +1,4 @@
-# Used in scripts/run-artemis.sh, invoked from the project root
+# Used in scripts/run-wildfly.sh, invoked from the project root
 
 FROM jboss/wildfly
 
