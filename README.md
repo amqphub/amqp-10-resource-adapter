@@ -1,14 +1,23 @@
 # AMQP 1.0 resource adapter
 
-A JCA resource adapter for using AMQP 1.0 messaging with app servers
-such as WildFly.
+[![Build Status](https://travis-ci.org/ssorj/amqp-10-resource-adapter.svg?branch=master)](https://travis-ci.org/ssorj/amqp-10-resource-adapter)
+
+A JCA resource adapter for using AMQP 1.0 messaging with Java app
+servers such as WildFly.
 
 This component combines the
 [Generic JMS JCA resource adapter](https://github.com/jms-ra/generic-jms-ra)
 with the
 [Apache Qpid JMS client](https://qpid.apache.org/components/jms/index.html).
 
+Note that this resource adapter does not support distributed
+transactions (XA transactions).  It supports only local transactions
+and non-transactional messaging.
+
 ## Maven coordinates
+
+To use the resource adapter in your project, add the following
+dependency to your `pom.xml` file:
 
 ```xml
 <dependency>
@@ -19,9 +28,53 @@ with the
 </dependency>
 ```
 
-## Example WildFly configuration
+## Building the code
 
-The `resource-adapters` subsystem:
+To build the code, use the `mvn package` command.
+
+```sh
+$ mvn package
+```
+
+## Running the example
+
+1. [Configure your WildFly installation.](#wildfly-configuration)
+
+1. [Build the code.](#building-the-code)
+
+1. Copy the `resource-adapter/target/resource-adapter-<version>.rar`
+   and `wildfly-example/target/wildfly-example-<version>.war` files to
+   the WildFly `standalone/deployments` directory.
+
+1. Copy the `wildfly-example/standalone-custom.xml` file to the
+   WildFly `standalone/configuration` directory.
+
+1. In a separate terminal window, start an AMQP 1.0 server on
+   localhost and port 5672.  If your server does not create queues on
+   demand, use the tools for your server to create queues called
+   `example/requests` and `example/responses`.
+
+1. In a separate terminal window, start WildFly.  Tell it to use the
+   `standalone-custom.xml` configuration file.
+
+1. Use `curl` to send text to the `send-request` endpoint.
+
+    ```sh
+    $ curl -fX POST http://localhost:8080/wildfly-example/api/send-request -H "content-type: text/plain" -d "hellooo"
+    ID:4a63adc0-547c-4881-bc3e-3c8eb7007648:2:1:1-1
+    ```
+
+1. Use `curl` again to get the response from the `receive-response` endpoint.
+
+    ```sh
+    $ curl -fX POST http://localhost:8080/wildfly-example/api/receive-response
+    ID:4a63adc0-547c-4881-bc3e-3c8eb7007648:2:1:1-1: HELLOOO
+    ```
+
+## WildFly configuration
+
+Add or modify the `resource-adapters` subsystem.  Change the JNDI and
+connection properties according to your needs.
 
 ```xml
 <subsystem xmlns="urn:jboss:domain:resource-adapters:5.0">
@@ -43,7 +96,7 @@ The `resource-adapters` subsystem:
 </subsystem>
 ```
 
-The `ejb3` subsystem:
+Add or modify the `ejb3` subsystem.
 
 ```xml
 <subsystem xmlns="urn:jboss:domain:ejb3:6.0">
@@ -58,7 +111,21 @@ The `ejb3` subsystem:
 For a complete example, see
 [standalone-custom.xml](wildfly-example/standalone-custom.xml).
 
-## Example Thorntail configuration
+Additional notes:
+
+* Your Artemis configuration must have the `messaging-activemq`
+  subsystem installed, even though you are not using the internal
+  broker in this case.
+
+* Your application code must have a
+  [`src/main/resources/META-INF/beans.xml`](wildfly-example/src/main/resources/META-INF/beans.xml)
+  file that enables bean discovery mode.
+
+* You application code must have a
+  [`src/main/resources/META-INF/MANIFEST.MF`](wildfly-example/src/main/resources/META-INF/MANIFEST.MF)
+  with an entry that corresponds to the name of your .rar file.
+
+## Thorntail configuration
 
 ```yaml
 swarm:
@@ -86,7 +153,7 @@ swarm:
     default-resource-adapter-name: default
 ```
 
-## Example MDB configuration
+## MDB configuration
 
 ```java
 @MessageDriven(activationConfig = {
@@ -112,7 +179,7 @@ For complete examples, see
 and
 [ResponseListener.java](wildfly-example/src/main/java/org/amqphub/jca/example/ResponseListener.java).
 
-## Example JMSContext injection
+## JMSContext injection
 
 ```java
 @Singleton
@@ -136,49 +203,3 @@ public class ExampleApplication {
 
 For a complete example, see
 [ExampleApplication.java](wildfly-example/src/main/java/org/amqphub/jca/example/ExampleApplication.java).
-
-## Running the example
-
-1. Start an AMQP 1.0 server on localhost and port 5672.  If your
-   server does not create queues on demand, use the tools for your
-   server to create queues called `example/requests` and
-   `example/responses`.
-
-1. Build the example code.
-
-```sh
-$ mvn package
-```
-
-1. Start
-
-
-```sh
-$ mvn clean package
-$ ./run-example.sh
-
-$ curl -X POST -d '{"text": "hello"}' -H 'Content-Type: application/json' http://localhost:8080/wildfly-example/api/send-request && echo
-$ curl -X POST http://localhost:8080/wildfly-example/api/receive-response && echo
-```
-
-<!-- # AMQP 1.0 resource adapter - Thorntail example -->
-
-1. Start an AMQP 1.0 server on localhost and port 5672.  If your
-   server does not create queues on demand, use the tools for your
-   server to create queue
-s called `example/requests` and
-   `example/responses`.
-
-<!-- 2. Build and run the example code. -->
-
-<!--         $ mvn thorntail:run -->
-
-<!-- 3. In another shell, use `curl` to send text to the `send-request` endpoint. -->
-
-<!--         $ curl -X POST -d '{"text": "hello"}' -H 'Content-Type: application/json' http://localhost:8080/api/send-request -->
-<!--         ID:4a63adc0-547c-4881-bc3e-3c8eb7007648:2:1:1-1 -->
-
-<!-- 4. Use `curl` again to get the response from the `receive-response` endpoint. -->
-
-<!--         $ curl -X POST http://localhost:8080/api/receive-response -->
-<!--         ID:4a63adc0-547c-4881-bc3e-3c8eb7007648:2:1:1-1: HELLO -->

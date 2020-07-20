@@ -5,4 +5,4 @@ default:
 .PHONY: test
 test:
 	mvn package
-	scripts/test.sh
+	scripts/test-example.sh
