@@ -50,7 +50,7 @@ The `ejb3` subsystem:
     </subsystem>
 
 A complete example configuration is available at
-<wildfly-example/standalone-custom.xml>.
+[wildfly-example/standalone-custom.xml](wildfly-example/standalone-custom.xml).
 
 ## Example Thorntail configuration
 

@@ -8,6 +8,18 @@ wildfly_pid=$!
 
 trap "kill $wildfly_pid $artemis_pid" EXIT
 
+function fail {
+    echo "-- ERROR --"
+    echo $1
+    echo "-- ARTEMIS LOG --"
+    cat /tmp/artemis.log
+    echo "-- WILDFLY LOG --"
+    cat /tmp/wildfly.log
+    echo "-- ERROR --"
+    echo $1
+    exit 1
+}
+
 ready=0
 
 for i in {0..60}; do
@@ -16,16 +28,11 @@ for i in {0..60}; do
 done
 
 if (( $ready == 0 )); then
-    echo "Error! WildFly never became ready"
-    echo "-- ARTEMIS LOG --"
-    cat /tmp/artemis.log
-    echo "-- WILDFLY LOG --"
-    cat /tmp/wildfly.log
-    exit 1
+    fail "WildFly did not become ready"
 fi
 
 # XXX For some reason, the request queue is created as a topic if we
 # don't have this sleep
 sleep 5
 
-scripts/run-curl-commands.sh
+scripts/run-curl-commands.sh || fail "Curl command failed"
