@@ -33,6 +33,6 @@ fi
 
 # XXX For some reason, the request queue is created as a topic if we
 # don't have this sleep
-sleep 5
+sleep 10
 
 scripts/run-curl-commands.sh || fail "Curl command failed"

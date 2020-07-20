@@ -10,75 +10,81 @@ with the
 
 ## Maven coordinates
 
-    <dependency>
-      <groupId>org.amqphub.jca</groupId>
-      <artifactId>resource-adapter</artifactId>
-      <version>${current-version}</version>
-      <type>rar</type>
-    </dependency>
+```xml
+<dependency>
+  <groupId>org.amqphub.jca</groupId>
+  <artifactId>resource-adapter</artifactId>
+  <version>${current-version}</version>
+  <type>rar</type>
+</dependency>
+```
 
 ## Example WildFly configuration
 
 The `resource-adapters` subsystem:
 
-    <subsystem xmlns="urn:jboss:domain:resource-adapters:5.0">
-      <resource-adapters>
-        <resource-adapter>
-          <archive>resource-adapter.rar</archive>
-          <transaction-support>NoTransaction</transaction-support>
-          <connection-definitions>
-            <connection-definition class-name="org.jboss.resource.adapter.jms.JmsManagedConnectionFactory"
-                                   jndi-name="java:global/jms/default">
-              <config-property name="UserName">example</config-property>
-              <config-property name="Password">example</config-property>
-              <config-property name="ConnectionFactory">factory1</config-property>
-              <config-property name="JndiParameters">java.naming.factory.initial=org.apache.qpid.jms.jndi.JmsInitialContextFactory;connectionFactory.factory1=amqp://localhost:5672</config-property>
-            </connection-definition>
-          </connection-definitions>
-        </resource-adapter>
-      </resource-adapters>
-    </subsystem>
+```xml
+<subsystem xmlns="urn:jboss:domain:resource-adapters:5.0">
+  <resource-adapters>
+    <resource-adapter>
+      <archive>resource-adapter.rar</archive>
+      <transaction-support>NoTransaction</transaction-support>
+      <connection-definitions>
+        <connection-definition class-name="org.jboss.resource.adapter.jms.JmsManagedConnectionFactory"
+                               jndi-name="java:global/jms/default">
+          <config-property name="UserName">example</config-property>
+          <config-property name="Password">example</config-property>
+          <config-property name="ConnectionFactory">factory1</config-property>
+          <config-property name="JndiParameters">java.naming.factory.initial=org.apache.qpid.jms.jndi.JmsInitialContextFactory;connectionFactory.factory1=amqp://localhost:5672</config-property>
+        </connection-definition>
+      </connection-definitions>
+    </resource-adapter>
+  </resource-adapters>
+</subsystem>
+```
 
 The `ejb3` subsystem:
 
-    <subsystem xmlns="urn:jboss:domain:ejb3:6.0">
-      <mdb>
-        <resource-adapter-ref resource-adapter-name="resource-adapter.rar"/>
-        <bean-instance-pool-ref pool-name="mdb-strict-max-pool"/>
-      </mdb>
-      ...
-    </subsystem>
+```xml
+<subsystem xmlns="urn:jboss:domain:ejb3:6.0">
+  <mdb>
+    <resource-adapter-ref resource-adapter-name="resource-adapter.rar"/>
+    <bean-instance-pool-ref pool-name="mdb-strict-max-pool"/>
+  </mdb>
+  ...
+</subsystem>
+```
 
-A complete example configuration is available at
-[wildfly-example/standalone-custom.xml](wildfly-example/standalone-custom.xml).
+For a complete example, see
+[standalone-custom.xml](wildfly-example/standalone-custom.xml).
 
 ## Example Thorntail configuration
 
-    swarm:
-      deployment:
-        org.amqphub.jca:resource-adapter.rar:
-      resource-adapters:
-        resource-adapters:
+```yaml
+swarm:
+  deployment:
+    org.amqphub.jca:resource-adapter.rar:
+  resource-adapters:
+    resource-adapters:
+      default:
+        archive: resource-adapter.rar
+        transaction-support: NoTransaction
+        connection-definitions:
           default:
-            archive: resource-adapter.rar
-            transaction-support: NoTransaction
-            connection-definitions:
-              default:
-                jndi-name: java:global/jms/default
-                class-name: org.jboss.resource.adapter.jms.JmsManagedConnectionFactory
-                config-properties:
-                  ConnectionFactory:
-                    value: factory1
-                  UserName:
-                    value: example
-                  Password:
-                    value: example
-                  JndiParameters:
-                    value: "java.naming.factory.initial=org.apache.qpid.jms.jndi.JmsInitialContextFactory;connectionFactory.factory1=amqp://${env.MESSAGING_SERVICE_HOST:localhost}:${env.MESSAGING_SERVICE_PORT:5672}"
-      ejb3:
-        default-resource-adapter-name: default
-      ee:
-        annotation-property-replacement: true
+            jndi-name: java:global/jms/default
+            class-name: org.jboss.resource.adapter.jms.JmsManagedConnectionFactory
+            config-properties:
+              ConnectionFactory:
+                value: factory1
+              UserName:
+                value: example
+              Password:
+                value: example
+              JndiParameters:
+                value: "java.naming.factory.initial=org.apache.qpid.jms.jndi.JmsInitialContextFactory;connectionFactory.factory1=amqp://${env.MESSAGING_SERVICE_HOST:localhost}:${env.MESSAGING_SERVICE_PORT:5672}"
+  ejb3:
+    default-resource-adapter-name: default
+```
 
 ## Example MDB configuration
 
@@ -100,6 +106,11 @@ public class ExampleListener implements MessageListener {
     }
 }
 ```
+
+For complete examples, see
+[RequestListener.java](wildfly-example/src/main/java/org/amqphub/jca/example/RequestListener.java)
+and
+[ResponseListener.java](wildfly-example/src/main/java/org/amqphub/jca/example/ResponseListener.java).
 
 ## Example JMSContext injection
 
@@ -123,21 +134,40 @@ public class ExampleApplication {
 }
 ```
 
-## Running the WildFly example
+For a complete example, see
+[ExampleApplication.java](wildfly-example/src/main/java/org/amqphub/jca/example/ExampleApplication.java).
 
-    $ mvn clean package
-    $ ./run-example.sh
+## Running the example
 
-    $ curl -X POST -d '{"text": "hello"}' -H 'Content-Type: application/json' http://localhost:8080/wildfly-example/api/send-request && echo
-    $ curl -X POST http://localhost:8080/wildfly-example/api/receive-response && echo
+1. Start an AMQP 1.0 server on localhost and port 5672.  If your
+   server does not create queues on demand, use the tools for your
+   server to create queues called `example/requests` and
+   `example/responses`.
 
+1. Build the example code.
+
+```sh
+$ mvn package
+```
+
+1. Start
+
+
+```sh
+$ mvn clean package
+$ ./run-example.sh
+
+$ curl -X POST -d '{"text": "hello"}' -H 'Content-Type: application/json' http://localhost:8080/wildfly-example/api/send-request && echo
+$ curl -X POST http://localhost:8080/wildfly-example/api/receive-response && echo
+```
 
 <!-- # AMQP 1.0 resource adapter - Thorntail example -->
 
-<!-- 1. Start an AMQP 1.0 server on localhost and port 5672.  If your -->
-<!--    server does not create queues on demand, use the tools for your -->
-<!--    server to create queues called `example/requests` and -->
-<!--    `example/responses`. -->
+1. Start an AMQP 1.0 server on localhost and port 5672.  If your
+   server does not create queues on demand, use the tools for your
+   server to create queue
+s called `example/requests` and
+   `example/responses`.
 
 <!-- 2. Build and run the example code. -->
 
