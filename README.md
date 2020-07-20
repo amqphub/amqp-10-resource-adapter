@@ -30,10 +30,11 @@ dependency to your `pom.xml` file:
 
 ## Building the code
 
-To build the code, use the `mvn package` command.
+The project requires Maven 3.  To build the code, use the `mvn
+install` command.
 
 ```sh
-$ mvn package
+$ mvn install
 ```
 
 ## Running the example
@@ -113,7 +114,7 @@ For a complete example, see
 
 Additional notes:
 
-* Your Artemis configuration must have the `messaging-activemq`
+* Your WildFly configuration must have the `messaging-activemq`
   subsystem installed, even though you are not using the internal
   broker in this case.
 
@@ -123,7 +124,7 @@ Additional notes:
 
 * You application code must have a
   [`src/main/resources/META-INF/MANIFEST.MF`](wildfly-example/src/main/resources/META-INF/MANIFEST.MF)
-  with an entry that corresponds to the name of your .rar file.
+  with an entry that corresponds to the name of your `.rar` file.
 
 ## Thorntail configuration
 
