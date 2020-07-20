@@ -1,7 +1,7 @@
 # AMQP 1.0 resource adapter
 
 A JCA resource adapter for using AMQP 1.0 messaging with app servers
-such as WildFly or Thorntail.
+such as WildFly.
 
 This component combines the
 [Generic JMS JCA resource adapter](https://github.com/jms-ra/generic-jms-ra)
@@ -16,6 +16,41 @@ with the
       <version>${current-version}</version>
       <type>rar</type>
     </dependency>
+
+## Example WildFly configuration
+
+The `resource-adapters` subsystem:
+
+    <subsystem xmlns="urn:jboss:domain:resource-adapters:5.0">
+      <resource-adapters>
+        <resource-adapter>
+          <archive>resource-adapter.rar</archive>
+          <transaction-support>NoTransaction</transaction-support>
+          <connection-definitions>
+            <connection-definition class-name="org.jboss.resource.adapter.jms.JmsManagedConnectionFactory"
+                                   jndi-name="java:global/jms/default">
+              <config-property name="UserName">example</config-property>
+              <config-property name="Password">example</config-property>
+              <config-property name="ConnectionFactory">factory1</config-property>
+              <config-property name="JndiParameters">java.naming.factory.initial=org.apache.qpid.jms.jndi.JmsInitialContextFactory;connectionFactory.factory1=amqp://localhost:5672</config-property>
+            </connection-definition>
+          </connection-definitions>
+        </resource-adapter>
+      </resource-adapters>
+    </subsystem>
+
+The `ejb3` subsystem:
+
+    <subsystem xmlns="urn:jboss:domain:ejb3:6.0">
+      <mdb>
+        <resource-adapter-ref resource-adapter-name="resource-adapter.rar"/>
+        <bean-instance-pool-ref pool-name="mdb-strict-max-pool"/>
+      </mdb>
+      ...
+    </subsystem>
+
+A complete example configuration is available at
+<wildfly-example/standalone-custom.xml>.
 
 ## Example Thorntail configuration
 

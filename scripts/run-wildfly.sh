@@ -2,4 +2,4 @@
 
 docker build -t wildfly-example -f scripts/wildfly.dockerfile .
 
-exec docker run -it --rm --net host wildfly-example
+exec docker run --rm --net host wildfly-example
