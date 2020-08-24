@@ -32,10 +32,6 @@ if (( $ready == 0 )); then
     fail "WildFly did not become ready"
 fi
 
-# XXX For some reason, the request queue is created as a topic if we
-# don't have this sleep
-sleep 10
-
 scripts/run-curl-commands.sh || fail "Curl command failed"
 
 echo "Test result: PASSED"
