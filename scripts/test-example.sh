@@ -17,6 +17,7 @@ function fail {
     cat /tmp/wildfly.log
     echo "-- ERROR --"
     echo $1
+    echo "Test result: FAILED"
     exit 1
 }
 
@@ -36,3 +37,5 @@ fi
 sleep 10
 
 scripts/run-curl-commands.sh || fail "Curl command failed"
+
+echo "Test result: PASSED"
