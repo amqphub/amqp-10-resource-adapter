@@ -24,7 +24,7 @@ function fail {
 ready=0
 
 for i in {0..60}; do
-    sleep 5
+    sleep 10
     curl -sfo /dev/null http://localhost:9990/health && ready=1 && break
 done
 

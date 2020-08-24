@@ -78,8 +78,8 @@ The example test performs the steps above.  You can run it with the
 following commands:
 
 ```sh
-    $ mvn clean package
-    $ scripts/test-example.sh
+$ mvn clean package
+$ scripts/test-example.sh
 ```
 
 ## WildFly configuration
@@ -186,31 +186,3 @@ public class ExampleApplication {
 
 For a complete example, see
 [ExampleApplication.java](wildfly-example/src/main/java/org/amqphub/jca/example/ExampleApplication.java).
-
-## Thorntail configuration
-
-```yaml
-swarm:
-  deployment:
-    org.amqphub.jca:resource-adapter.rar:
-  resource-adapters:
-    resource-adapters:
-      default:
-        archive: resource-adapter.rar
-        transaction-support: NoTransaction
-        connection-definitions:
-          default:
-            jndi-name: java:global/jms/default
-            class-name: org.jboss.resource.adapter.jms.JmsManagedConnectionFactory
-            config-properties:
-              ConnectionFactory:
-                value: factory1
-              UserName:
-                value: example
-              Password:
-                value: example
-              JndiParameters:
-                value: "java.naming.factory.initial=org.apache.qpid.jms.jndi.JmsInitialContextFactory;connectionFactory.factory1=amqp://${env.MESSAGING_SERVICE_HOST:localhost}:${env.MESSAGING_SERVICE_PORT:5672}"
-  ejb3:
-    default-resource-adapter-name: default
-```
