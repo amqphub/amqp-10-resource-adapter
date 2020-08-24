@@ -1,23 +1,21 @@
 package org.amqphub.jca.example;
 
-import javax.ejb.Singleton;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 import javax.inject.Inject;
+import javax.inject.Singleton;
 import javax.jms.JMSConnectionFactory;
-import javax.jms.JMSException;
 import javax.jms.JMSConsumer;
 import javax.jms.JMSContext;
+import javax.jms.JMSException;
 import javax.jms.JMSProducer;
 import javax.jms.Queue;
 import javax.jms.TextMessage;
 import javax.ws.rs.ApplicationPath;
-import javax.ws.rs.BadRequestException;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.NotFoundException;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.MediaType;
 import org.jboss.logging.Logger;
@@ -32,11 +30,13 @@ public class ExampleApplication extends Application {
     @JMSConnectionFactory("java:global/jms/default")
     private JMSContext jmsContext;
 
+    BlockingQueue<String> responses = new LinkedBlockingQueue<>();
+
     @POST
-    @Path("send-request")
-    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/send-request")
+    @Consumes(MediaType.TEXT_PLAIN)
     @Produces(MediaType.TEXT_PLAIN)
-    public String sendRequest(Request request) {
+    public synchronized String sendRequest(String text) {
         log.infof("Sending request message");
 
         Queue requests = jmsContext.createQueue("example/requests");
@@ -44,7 +44,7 @@ public class ExampleApplication extends Application {
         TextMessage message = jmsContext.createTextMessage();
 
         try {
-            message.setText(request.getText());
+            message.setText(text);
 
             producer.send(requests, message);
 
@@ -55,24 +55,20 @@ public class ExampleApplication extends Application {
     }
 
     @POST
-    @Path("receive-response")
+    @Path("/receive-response")
     @Produces(MediaType.TEXT_PLAIN)
     public String receiveResponse() {
         log.infof("Receiving response message");
 
-        Queue responses = jmsContext.createQueue("example/responses");
-        JMSConsumer consumer = jmsContext.createConsumer(responses);
-
-        TextMessage message = (TextMessage) consumer.receiveNoWait();
-
-        if (message == null) {
-            return "[No responses]\n";
-        }
+        String response;
 
         try {
-            return message.getJMSCorrelationID() + ": " + message.getText() + "\n";
-        } catch (JMSException e) {
+            response = responses.take();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
             throw new RuntimeException(e);
         }
+
+        return response + "\n";
     }
 }

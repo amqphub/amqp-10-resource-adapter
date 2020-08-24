@@ -1,6 +1,5 @@
 package org.amqphub.jca.example;
 
-import java.util.concurrent.atomic.AtomicInteger;
 import javax.ejb.ActivationConfigProperty;
 import javax.ejb.MessageDriven;
 import javax.ejb.TransactionAttribute;
@@ -12,20 +11,17 @@ import javax.jms.JMSException;
 import javax.jms.JMSProducer;
 import javax.jms.Message;
 import javax.jms.MessageListener;
-import javax.jms.MessageProducer;
 import javax.jms.Queue;
-import javax.jms.Session;
 import javax.jms.TextMessage;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import org.jboss.logging.Logger;
 
 @MessageDriven(activationConfig = {
-        // @ActivationConfigProperty(propertyName = "user", propertyValue = "example"),
-        // @ActivationConfigProperty(propertyName = "password", propertyValue = "example"),
+        @ActivationConfigProperty(propertyName = "user", propertyValue = "example"),
+        @ActivationConfigProperty(propertyName = "password", propertyValue = "example"),
         @ActivationConfigProperty(propertyName = "connectionFactory", propertyValue = "factory1"),
         @ActivationConfigProperty(propertyName = "destination", propertyValue = "queue1"),
-        @ActivationConfigProperty(propertyName = "jndiParameters", propertyValue = "java.naming.factory.initial=org.apache.qpid.jms.jndi.JmsInitialContextFactory;connectionFactory.factory1=amqp://${env.MESSAGING_SERVICE_HOST:localhost}:${env.MESSAGING_SERVICE_PORT:5672};queue.queue1=example/requests"),
+        @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue"),
+        @ActivationConfigProperty(propertyName = "jndiParameters", propertyValue = "java.naming.factory.initial=org.apache.qpid.jms.jndi.JmsInitialContextFactory;connectionFactory.factory1=amqp://localhost:5672;queue.queue1=example/requests"),
     })
 @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 public class RequestListener implements MessageListener {
