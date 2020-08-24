@@ -5,4 +5,5 @@ services:
  - docker
 
 script:
+ - mvn clean package
  - scripts/test-example.sh
