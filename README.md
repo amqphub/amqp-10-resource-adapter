@@ -1,6 +1,6 @@
 # AMQP 1.0 resource adapter
 
-[![Build Status](https://travis-ci.org/ssorj/amqp-10-resource-adapter.svg?branch=master)](https://travis-ci.org/ssorj/amqp-10-resource-adapter)
+[![Build Status](https://travis-ci.org/amqphub/amqp-10-resource-adapter.svg?branch=master)](https://travis-ci.org/amqphub/amqp-10-resource-adapter)
 
 A JCA resource adapter for using AMQP 1.0 messaging with Java app
 servers such as WildFly.
