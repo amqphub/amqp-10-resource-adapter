@@ -186,3 +186,5 @@ public class ExampleApplication {
 
 For a complete example, see
 [ExampleApplication.java](wildfly-example/src/main/java/org/amqphub/jca/example/ExampleApplication.java).
+
+<!-- 1 -->
