@@ -1,0 +1,22 @@
+name: main
+on: [push, pull_request]
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java: [11, 16]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+      - uses: actions/setup-java@v2
+        with:
+          java-version: ${{ matrix.java }}
+          distribution: 'adopt'
+      - run: mvn -B clean package
+      - run: scripts/test-example.sh
