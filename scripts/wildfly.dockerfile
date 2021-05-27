@@ -1,6 +1,6 @@
 # Used in scripts/run-wildfly.sh, invoked from the project root
 
-FROM jboss/wildfly
+FROM jboss/wildfly:latest
 
 COPY resource-adapter/target/resource-adapter-*.rar /opt/jboss/wildfly/standalone/deployments/resource-adapter.rar
 COPY wildfly-example/target/wildfly-example-*.war /opt/jboss/wildfly/standalone/deployments/wildfly-example.war
