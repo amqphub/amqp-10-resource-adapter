@@ -47,8 +47,8 @@
   </developers>
 
   <properties>
-    <qpid-jms-version>0.53.0</qpid-jms-version>
-    <generic-jms-ra-version>2.0.6.Final</generic-jms-ra-version>
+    <qpid-jms-version>1.0.0</qpid-jms-version>
+    <generic-jms-ra-version>2.0.9.Final</generic-jms-ra-version>
 
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
