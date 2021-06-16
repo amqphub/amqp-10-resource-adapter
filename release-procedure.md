@@ -10,3 +10,4 @@ Steps:
 * Perform the release: `mvn -Prelease clean release:perform`
 * Go to https://oss.sonatype.org/#stagingRepositories
 * Select the open repo and "Close" it
+* Wait until the close completes and then "Release" it
