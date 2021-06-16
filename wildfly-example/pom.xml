@@ -5,11 +5,11 @@
   <parent>
     <groupId>org.amqphub.jca</groupId>
     <artifactId>resource-adapter-parent</artifactId>
-    <version>1.0.3-SNAPSHOT</version>
+    <version>2.0.0</version>
   </parent>
 
   <artifactId>wildfly-example</artifactId>
-  <version>1.0.3-SNAPSHOT</version>
+  <version>2.0.0</version>
   <packaging>war</packaging>
 
   <name>AMQP 1.0 resource adapter - WildFly example</name>
@@ -55,7 +55,7 @@
     <dependency>
       <groupId>org.amqphub.jca</groupId>
       <artifactId>resource-adapter</artifactId>
-      <version>1.0.3-SNAPSHOT</version>
+      <version>2.0.0</version>
       <type>rar</type>
     </dependency>
   </dependencies>
