@@ -50,7 +50,7 @@ $ mvn install
 1. Copy the `wildfly-example/standalone-custom.xml` file to the
    WildFly `standalone/configuration` directory.
 
-1. In a separate terminal window, start an AMQP 1.0 server wint user
+1. In a separate terminal window, start an AMQP 1.0 server with user
    `example` and password `example` on localhost and port 5672.  If
    your server does not create queues on demand, use the tools for
    your server to create queues called `example/requests` and
