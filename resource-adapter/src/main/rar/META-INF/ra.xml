@@ -131,5 +131,22 @@
             </messageadapter>
         </inbound-resourceadapter>
 
+        <adminobject>
+          <adminobject-interface>javax.jms.Queue</adminobject-interface>
+          <adminobject-class>org.apache.qpid.jms.JmsQueue</adminobject-class>
+            <config-property>
+                <config-property-name>Address</config-property-name>
+                <config-property-type>java.lang.String</config-property-type>
+            </config-property>
+        </adminobject>
+
+        <adminobject>
+          <adminobject-interface>javax.jms.Topic</adminobject-interface>
+          <adminobject-class>org.apache.qpid.jms.JmsTopic</adminobject-class>
+            <config-property>
+                <config-property-name>Address</config-property-name>
+                <config-property-type>java.lang.String</config-property-type>
+            </config-property>
+        </adminobject>
     </resourceadapter>
 </connector>

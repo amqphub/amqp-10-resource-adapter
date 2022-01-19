@@ -495,7 +495,7 @@
       <resource-adapters>
         <resource-adapter>
           <archive>resource-adapter.rar</archive>
-          <transaction-support>NoTransaction</transaction-support>
+          <transaction-support>LocalTransaction</transaction-support>
           <connection-definitions>
             <connection-definition class-name="org.jboss.resource.adapter.jms.JmsManagedConnectionFactory"
                                    jndi-name="java:global/jms/default">
@@ -504,6 +504,12 @@
               <config-property name="ConnectionFactory">factory1</config-property>
               <config-property name="JndiParameters">java.naming.factory.initial=org.apache.qpid.jms.jndi.JmsInitialContextFactory;connectionFactory.factory1=amqp://localhost:5672</config-property>
             </connection-definition>
+            <admin-objects>
+              <admin-object class-name="org.apache.qpid.jms.JmsQueue"
+                            jndi-name="java:global/jms/somequeue">
+                <config-property name="Address">somequeue</config-property>
+              </admin-object>
+            </admin-objects>
           </connection-definitions>
         </resource-adapter>
       </resource-adapters>

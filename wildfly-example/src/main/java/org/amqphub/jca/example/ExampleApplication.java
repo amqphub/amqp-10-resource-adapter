@@ -30,6 +30,9 @@ public class ExampleApplication extends Application {
     @JMSConnectionFactory("java:global/jms/default")
     private JMSContext jmsContext;
 
+    @Resource(lookup = "java:global/jms/somequeue")
+    private Queue someQueue;
+
     BlockingQueue<String> responses = new LinkedBlockingQueue<>();
 
     @POST
